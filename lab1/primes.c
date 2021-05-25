@@ -26,7 +26,7 @@ int main(void){
             fprintf(STDDER_FILENO, "fork error\n");
             exit(0);
         }
-        // 子进程空间负责写所有剩余的数字进入管道中
+        // 父进程空间负责写所有剩余的数字进入管道中
         else if (pid > 0){
             //printf("cpid: %d\n", pid);
             close(fd[READEND]);
@@ -39,7 +39,7 @@ int main(void){
             wait((int *)0);
             exit(0);
         }
-        //父进程空间则读当前管道里的数字，并且判断是否为numbers[0]的倍数。不是则重新存回数组
+        //子进程空间则读当前管道里的数字，并且判断是否为numbers[0]的倍数。不是则重新存回数组
         else {
             //printf("fpid: %d\n", pid);
             close(fd[WRITEEND]);
